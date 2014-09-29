@@ -39,6 +39,19 @@
                 <form:errors path="lastName" cssClass="help-inline" element="span"/>
             </div>
         </div>
+		
+        <c:set var="teamErrors"><form:errors path="teamId"/></c:set>
+        <div class="control-group<c:if test="${not empty teamErrors}"> error</c:if>">
+            <label class="control-label" for="field-team">Team</label>
+            <div class="controls">
+                <form:select path="teamId">
+					<form:options items="${signupForm.possibleTeams}"  itemValue="id" itemLabel="teamName"/>  
+				</form:select>
+				
+            </div>
+        </div>
+		
+		
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">Sign up</button>
             <button type="button" class="btn">Cancel</button>

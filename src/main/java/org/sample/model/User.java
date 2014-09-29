@@ -18,8 +18,12 @@ public class User {
     private String lastName;
     private String email;
     
+    
     @OneToOne(cascade = {CascadeType.ALL})
     private Address address; 
+    
+    @OneToOne(cascade={CascadeType.MERGE,CascadeType.REFRESH})
+    private Team team;
     
     public Long getId() {
         return id;
@@ -62,7 +66,14 @@ public class User {
 		this.address = address;
 	}
 
+	public Team getTeam() {
+		return team;
+	}
+
+	public void setTeam(Team team) {
+		this.team = team;
+	}
+
     
-	
 	
 }

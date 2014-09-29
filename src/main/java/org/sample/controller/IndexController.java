@@ -23,7 +23,8 @@ public class IndexController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView index() {
     	ModelAndView model = new ModelAndView("index");
-    	model.addObject("signupForm", new SignupForm());    	
+    	model.addObject("signupForm", sampleService.getTeams()); 
+    	//model.addObject("possibleTeams", sampleService.getTeams());
         return model;
     }
 
@@ -36,10 +37,12 @@ public class IndexController {
             	model = new ModelAndView("show");
             } catch (InvalidUserException e) {
             	model = new ModelAndView("index");
+            	model.addObject("signupForm", sampleService.getTeams()); 
             	model.addObject("page_error", e.getMessage());
             }
         } else {
         	model = new ModelAndView("index");
+        	model.addObject("signupForm", sampleService.getTeams()); 
         }   	
     	return model;
     }

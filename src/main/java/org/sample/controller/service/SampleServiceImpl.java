@@ -14,8 +14,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.sql.*;
+
+
+
+
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 
 
 @Service
@@ -44,8 +50,12 @@ public class SampleServiceImpl implements SampleService {
         user.setLastName(signupForm.getLastName());
         user.setAddress(address);
         
+        user.setTeam(teamDao.findOne(signupForm.getTeamId()));
+        
         user = userDao.save(user);   // save object to DB
         
+        
+       
         
         // Iterable<Address> addresses = addDao.findAll();  // find all 
         // Address anAddress = addDao.findOne((long)3); // find by ID
@@ -78,5 +88,20 @@ public class SampleServiceImpl implements SampleService {
     	java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
     	return currentTimestamp;
     	
+    }
+
+	public SignupForm getTeams() {
+		SignupForm signupForm = new SignupForm();
+		List<Team> teams = constructList(teamDao.findAll());
+		signupForm.setPossibleTeams(teams);
+		return signupForm;
+	}
+	
+	private List<Team> constructList(Iterable<Team> teams) {
+		List< Team> list = new ArrayList<Team>();
+        for (Team team: teams) {
+            list.add(team);
+        }
+        return list;
     }
 }
