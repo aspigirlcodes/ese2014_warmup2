@@ -31,7 +31,8 @@ public class TeamController {
     public ModelAndView create(@Valid TeamForm teamForm, BindingResult result, RedirectAttributes redirectAttributes) {
     	ModelAndView model;    	
     	
-    	model = new ModelAndView("new-team");
+    	sampleService.saveFrom(teamForm);
+    	model = new ModelAndView("show");
           	
     	return model;
     }

@@ -2,14 +2,20 @@ package org.sample.controller.service;
 
 import org.sample.controller.exceptions.InvalidUserException;
 import org.sample.controller.pojos.SignupForm;
+import org.sample.controller.pojos.TeamForm;
 import org.sample.model.Address;
+import org.sample.model.Team;
 import org.sample.model.User;
 import org.sample.model.dao.AddressDao;
+import org.sample.model.dao.TeamDao;
 import org.sample.model.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+
+import java.sql.*;
+import java.util.Calendar;
 
 
 @Service
@@ -17,6 +23,7 @@ public class SampleServiceImpl implements SampleService {
 
     @Autowired    UserDao userDao;
     @Autowired    AddressDao addDao;
+    @Autowired	  TeamDao teamDao;
     
     @Transactional
     public SignupForm saveFrom(SignupForm signupForm) throws InvalidUserException{
@@ -45,8 +52,31 @@ public class SampleServiceImpl implements SampleService {
         
         
         signupForm.setId(user.getId());
+        
 
         return signupForm;
 
+    }
+    
+    @Transactional
+    public TeamForm saveFrom(TeamForm teamForm){
+    	String teamName = teamForm.getTeamName();
+    	
+    	Team team = new Team();
+    	team.setTeamName(teamName);
+    	team.setTimestamp(getTimestamp());
+    	
+    	team = teamDao.save(team);
+    	
+    	teamForm.setId(team.getId());
+    	teamForm.setTimestamp(team.getTimestamp());
+    	
+    	return teamForm;
+    }
+    
+    private java.sql.Timestamp getTimestamp(){
+    	java.sql.Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+    	return currentTimestamp;
+    	
     }
 }

@@ -8,6 +8,7 @@ public class TeamForm {
 
     private Long id;
     private String teamName;
+    private java.sql.Timestamp timestamp;
     
 
     public String getTeamName() {
@@ -25,4 +26,14 @@ public class TeamForm {
     public void setId(Long id) {
         this.id = id;
     }
+
+	public java.sql.Timestamp getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(java.sql.Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+    
+    
 }
