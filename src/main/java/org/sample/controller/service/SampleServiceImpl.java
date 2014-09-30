@@ -90,6 +90,7 @@ public class SampleServiceImpl implements SampleService {
     	
     }
 
+    @Transactional
 	public SignupForm getTeams() {
 		SignupForm signupForm = new SignupForm();
 		List<Team> teams = constructList(teamDao.findAll());
@@ -104,4 +105,16 @@ public class SampleServiceImpl implements SampleService {
         }
         return list;
     }
+
+	@Transactional
+	public User getUser(long userId) throws InvalidUserException {
+		if(!userDao.exists(userId)){
+			throw new InvalidUserException("Sorry, this userId is does not exist.");   // throw exception
+        }
+		
+		User user = userDao.findOne(userId);
+		
+		
+		return user;
+	}
 }

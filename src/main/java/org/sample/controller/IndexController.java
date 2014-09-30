@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -51,6 +52,17 @@ public class IndexController {
     public String securityError(RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("page_error", "You do have have permission to do that!");
         return "redirect:/";
+    }
+    
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ModelAndView profile(@RequestParam("userId")	long userId){
+    	ModelAndView model = new ModelAndView("profile");
+    		try {
+    			model.addObject("user", sampleService.getUser(userId));
+    		} catch (InvalidUserException e){
+    			model.addObject("page_error", e.getMessage());
+    		}
+    	return model;
     }
 
 }
